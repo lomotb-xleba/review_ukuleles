@@ -1,20 +1,36 @@
 import sqlite3
 
-sql = "CREATE TABLE ukuleles (name TEXT, price TEXT, description TEXT)"
-sql = "SELECT * FROM ukuleles"
-conn = sqlite3.connect("mydata.db")
-cursor = conn.cursor()
+# sql = "CREATE TABLE ukuleles (name TEXT, price TEXT, description TEXT)"
+# sql = "SELECT * FROM ukuleles"
+# conn = sqlite3.connect("mydata.db")
+# cursor = conn.cursor()
 
-cursor.execute(sql)
+# cursor.execute(sql)
 
-res =cursor.fetchall()
+# res =cursor.fetchall()
 
-n, m=map(int, input("введите диапозон цены через пробел (пример: 3000 5000): ").split( ))
-for r in res:
-    if r[1]:    
-        if n<=float(r[1])<=m:
-            print("name   :",r[0])
-            print("price  :",r[1])
-            print("description   :",r[2])
 
-conn.close()
+
+# conn.close()
+class DataAccessObject:
+    __instance = None
+
+    def new(cls):
+        if cls.__instance is None:
+            cls.instance = super().new__(cls)
+        return cls.__instance
+
+    def init(self):
+        self.connect = sqlite3.connect('mydata.db')
+        self.tab = self.connect.cursor()
+        self.tab.execute("CREATE TABLE IF NOT EXISTS ukuleles (name TEXT, price TEXT, description TEXT)")
+        self.connect.commit()
+    def create(self, args):
+        self.tab.executemany("INSERT INTO ukuleles VALUES (?,?,?)", args)
+        self.connect.commit()
+    def show_base(self):
+        self.tab.execute('SELECT * FROM ukuleles')
+        result = self.tab.fetchall()
+        print(result)
+    def close_database(self):
+        self.connect.close()

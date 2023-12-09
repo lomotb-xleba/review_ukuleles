@@ -1,41 +1,28 @@
-import requests
-from bs4 import BeautifulSoup as bs
-import sqlite3
-import sys
+import telebot
+import parser_1
+import database
 
-sys.setrecursionlimit(10000)
-url="https://guitar-saloon.ru/shop/ukulele/"
+bot = telebot.TeleBot('6615769203:AAHrp4PiYLIwCmxwudQDKoQZ5b3ljHiWFTA')
 
-base_url = "https://guitar-saloon.ru"
-r = requests.get(url)
-soup = bs(r.content, "lxml")
-products = soup.find_all("div", class_="goods")
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(message.chat.id, 'Hello')
+    bot.register_next_step_handler(message, parser)
+def parser(message):
+    bot.send_message(message.chat.id, 'pars..')
+    url="https://guitar-saloon.ru/shop/ukulele/"
+    parser_1.parser(url)
+    bot.send_message(message.chat.id, 'write your price range:')
+    bot.register_next_step_handler(message, get_range)
+def get_range(message):
+    dao = database.DataAccessObject()
+    print(dao)
+    # n, m =map(int(message).split(' '))
+    # for r in dao:
+    #     if r[1]:    
+    #         if n[0]<=float(r[1])<=n[1]:
+    #             print("name   :",r[0])
+    #             print("price  :",r[1])
+    #             print("description   :",r[2])
 
-urls = []
-for product in products:
-    link = product.find('a', itemprop='url').get("href")
-    urls.append(base_url + link)
-print(urls[99])
-args = []
-for a in urls:
-    r = requests.get(a)
-    soup = bs(r.content, "lxml")
-    name = soup.find("h1", itemprop="name")
-    if name:
-        name=name.get_text(strip=True)
-    price = soup.select_one("span.strong")
-    if price:
-        price=price.get('content')
-    description = soup.find('div', id='goods_desc')
-    if description:
-        description=description.findNext('div', itemprop='description').text
-    args.append((name, price, description))
-            
-
-conn = sqlite3.connect("mydata.db")
-
-cursor = conn.cursor()
-
-cursor.executemany("INSERT INTO ukuleles VALUES (?,?,?)", args)
-conn.commit()
-conn.close()
+bot.polling(none_stop=True)
