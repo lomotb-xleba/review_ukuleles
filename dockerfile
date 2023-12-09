@@ -11,3 +11,4 @@ COPY database.py ./
 
 RUN pip install beautifulsoup4
 RUN pip install requests
+RUN pip install pyTelegramBotAPI  

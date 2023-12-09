@@ -30,5 +30,5 @@ def parser(url:str):
         if description:
             description=description.findNext('div', itemprop='description').text
         args.append((name, price, description))
-            
+    return args        
 

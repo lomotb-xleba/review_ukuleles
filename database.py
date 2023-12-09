@@ -17,7 +17,7 @@ class DataAccessObject:
 
     def new(cls):
         if cls.__instance is None:
-            cls.instance = super().new__(cls)
+            cls.__instance = super().new__(cls)
         return cls.__instance
 
     def init(self):

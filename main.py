@@ -1,6 +1,6 @@
 import telebot
 import parser_1
-import database
+from database import DataAccessObject
 
 bot = telebot.TeleBot('6615769203:AAHrp4PiYLIwCmxwudQDKoQZ5b3ljHiWFTA')
 
@@ -11,12 +11,15 @@ def start(message):
 def parser(message):
     bot.send_message(message.chat.id, 'pars..')
     url="https://guitar-saloon.ru/shop/ukulele/"
-    parser_1.parser(url)
-    bot.send_message(message.chat.id, 'write your price range:')
-    bot.register_next_step_handler(message, get_range)
-def get_range(message):
-    dao = database.DataAccessObject()
-    print(dao)
+    dao=DataAccessObject()
+    arg = dao.create(parser_1.parser(url))
+    bot.send_message(message.chat.id, arg)
+    #bot.send_message(message.chat.id, 'write your price range:')
+#     bot.register_next_step_handler(message, get_range)
+# def get_range(message):
+    # dao = database.DataAccessObject()
+    # dao.create(arg)
+    # print(dao)
     # n, m =map(int(message).split(' '))
     # for r in dao:
     #     if r[1]:    
