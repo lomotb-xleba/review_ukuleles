@@ -2,7 +2,7 @@ import telebot
 import parser_1
 from database import DataAccessObject
 
-bot = telebot.TeleBot('6615769203:AAHrp4PiYLIwCmxwudQDKoQZ5b3ljHiWFTA')
+bot = telebot.TeleBot('TOKEN')
 
 @bot.message_handler(commands=['start'])
 def start(message):
