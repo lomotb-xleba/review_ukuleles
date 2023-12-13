@@ -1,5 +1,5 @@
 import telebot
-import parser_1
+import back_parser
 from database import DataAccessObject
 
 bot = telebot.TeleBot('6615769203:AAHrp4PiYLIwCmxwudQDKoQZ5b3ljHiWFTA')
@@ -14,7 +14,7 @@ def parser(message):
     url="https://guitar-saloon.ru/shop/ukulele/"
     dao=DataAccessObject()
     aa=str(message.text)
-    a = parser_1.parser(url,aa)
+    a = back_parser.parser(url,aa)
     dao.init()
     dao.create(a)
     arg=dao.show_base()
