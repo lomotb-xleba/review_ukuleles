@@ -2,9 +2,7 @@ import telebot
 import parser_1
 from database import DataAccessObject
 
-# def init(self):
 bot = telebot.TeleBot('6615769203:AAHrp4PiYLIwCmxwudQDKoQZ5b3ljHiWFTA')
-
 
 
 @bot.message_handler(commands=['start'])
@@ -40,5 +38,3 @@ def parser(message):
 
 bot.polling(none_stop=True)
 
-    # if __name__ == '__main__':
-    #     init()
