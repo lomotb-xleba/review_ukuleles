@@ -23,14 +23,17 @@ class DataAccessObject:
     def init(self):
         self.connect = sqlite3.connect('mydata.db')
         self.tab = self.connect.cursor()
-        self.tab.execute("CREATE TABLE IF NOT EXISTS ukuleles (name TEXT, price TEXT, description TEXT)")
+        self.tab.execute("CREATE TABLE IF NOT EXISTS ukuleles (name TEXT, price TEXT, url TEXT)")
         self.connect.commit()
     def create(self, args):
-        self.tab.executemany("INSERT INTO ukuleles VALUES (?,?,?)", args)
-        self.connect.commit()
+        i=0
+        while i<len(args):
+            self.tab.execute("INSERT INTO ukuleles VALUES (?,?,?)", args[i])
+            self.connect.commit()
+            i+=1
     def show_base(self):
         self.tab.execute('SELECT * FROM ukuleles')
         result = self.tab.fetchall()
-        print(result)
+        return result
     def close_database(self):
         self.connect.close()
