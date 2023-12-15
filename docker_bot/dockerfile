@@ -1,0 +1,9 @@
+FROM python:3.10
+
+RUN apt-get update
+RUN mkdir docker_bot
+RUN pip install pyTelegramBotAPI
+
+COPY . ./docker_bot
+
+CMD python3 main.py

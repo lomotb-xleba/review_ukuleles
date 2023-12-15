@@ -1,12 +1,13 @@
 version: '3'
 services:
-  web:
-    container_name: pars_app
-    build: .
-    restart: on-failure
-    ports:
-      - "8000:8000"
+  bot:
+    container_name: bot
+    build: ./docker_bot
   
-  ubuntu:
-    container_name: ubuntu_container
-    image: "ubuntu"
+  db:
+    container_name: db
+    build: ./docker_db
+
+  parser:
+    container_name: parser
+    build: ./docker_parser  

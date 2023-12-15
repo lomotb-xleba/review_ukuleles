@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 import sqlite3
 import sys
+
 aa='3000 5000'
 url="https://guitar-saloon.ru/shop/ukulele/"
 def parser(url:str,aa):
