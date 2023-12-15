@@ -9,5 +9,5 @@ services:
     build: ./docker_db
 
   parser:
-    container_name: parser
+    container_name: parser 
     build: ./docker_parser  
