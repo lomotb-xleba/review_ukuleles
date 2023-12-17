@@ -1,6 +1,6 @@
 import telebot
-import docker_parser.back_parser as back_parser
-from docker_db.database import DataAccessObject
+import back_parser 
+from database import DataAccessObject
 
 bot = telebot.TeleBot('6615769203:AAHrp4PiYLIwCmxwudQDKoQZ5b3ljHiWFTA')
 

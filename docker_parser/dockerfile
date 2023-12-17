@@ -5,4 +5,4 @@ RUN mkdir docker_parser
 RUN pip install requests
 RUN pip install beautifulsoup4
 
-COPY . ./docker_parser
+COPY . .

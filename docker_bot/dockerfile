@@ -1,11 +1,13 @@
 FROM python:3.10
 
-ADD . ./docker_parser/back_parser
-
 RUN apt-get update
 RUN mkdir docker_bot
+RUN mkdir docker_parser
+RUN mkdir docker_db
+RUN pip install requests
+RUN pip install beautifulsoup4
 RUN pip install pyTelegramBotAPI
 
-COPY . ./docker_bot
-
-CMD ["python","-u","./main.py"]
+COPY . .
+ENTRYPOINT [ "python" ]
+CMD ["./main.py"]
